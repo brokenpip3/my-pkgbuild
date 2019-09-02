@@ -6,6 +6,14 @@ send_tg_message() {
 		--data-urlencode "parse_mode=markdown" "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" 
 }
 
+create_pkg() {
+if [[ "$2" = "True" ]]; then
+  makepkg -sci --noconfirm  --nodeps --skipchecksums
+else
+  makepkg -sci --noconfirm  --skipchecksums
+fi
+}
+
 prettyprint_up () {
 echo ""
 echo ""
@@ -20,13 +28,14 @@ echo ""
 
 RESULT=""
 package="$1"
+mode="$2"
 
 cd $HOME/$package/ 
 source PKGBUILD
 prettyprint_up 
 echo "Makepkg for pkg: $pkgname"
 prettyprint_down 
-makepkg -sci --noconfirm  --skipchecksums
+create_pkg
 if [[ $? = 0 ]]; then
 prettyprint_up 
 echo "$pkgname success!"

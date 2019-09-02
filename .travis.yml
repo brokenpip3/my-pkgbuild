@@ -5,8 +5,11 @@ before_install:
 - docker run -d -t --name my-pkgbuild brokenpip3/my-pkgbuild bash
 
 jobs:
-        include:
-                - stage: lxd
-                  script:
-                          - docker exec my-pkgbuild bash check_version.sh lxd
-                          - docker exec my-pkgbuild bash build.sh lxd
+  include:
+    - stage: lxd
+      script:
+        - docker exec my-pkgbuild bash check_version.sh lxd
+        - docker exec my-pkgbuild bash build.sh lxd
+    - stage: lxd-forward-git
+      script:
+        - docker exec my-pkgbuild bash build.sh lxd-forward-git True

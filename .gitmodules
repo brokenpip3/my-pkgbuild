@@ -1,3 +1,6 @@
 [submodule "pkgbuild/lxd"]
 	path = pkgbuild/lxd
 	url = https://aur.archlinux.org/lxd.git
+[submodule "pkgbuild/lxd-forward-git"]
+	path = pkgbuild/lxd-forward-git
+	url = https://aur.archlinux.org/lxd-forward-git.git
