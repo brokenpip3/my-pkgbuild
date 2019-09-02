@@ -26,7 +26,7 @@ build_image:
 
 lxd:
   stage: lxd
-  img: $DOCKERIMG
+  image: $DOCKERIMG
   allow_failure: true
   script:
     - docker run -d -t --name my-pkgbuild $DOCKERIMG bash
@@ -35,7 +35,7 @@ lxd:
   
 lxd-forward-git:  
   stage: lxd-forward-git
-  img: brokenpip3/my-pkgbuild
+  image: brokenpip3/my-pkgbuild
   allow_failure: true
   script:
     - docker run -d -t --name my-pkgbuild brokenpip3/my-pkgbuild bash
