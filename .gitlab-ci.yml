@@ -22,7 +22,7 @@ build_image:
     - docker info
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
     - docker build -t $DOCKERIMG .
-    - docker push $DOCKERIMG
+    - docker push $CI_REGISTRY/$DOCKERIMG
 
 lxd:
   stage: lxd
