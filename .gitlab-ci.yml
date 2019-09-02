@@ -33,7 +33,7 @@ lxd:
   
 lxd-forward-git:  
   stage: pkgbuild
-  image: brokenpip3/my-pkgbuild
+  image: $CI_REGISTRY/$DOCKERIMG
   allow_failure: true
   script:
     - ./build.sh lxd-forward-git True
