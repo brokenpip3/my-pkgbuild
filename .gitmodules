@@ -1,0 +1,3 @@
+[submodule "pkgbuild/lxd"]
+	path = pkgbuild/lxd
+	url = https://aur.archlinux.org/lxd.git

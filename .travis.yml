@@ -1,0 +1,12 @@
+services:
+- docker
+before_install:
+- docker build -t brokenpip3/my-pkgbuild .
+- docker run -d -t --name my-pkgbuild brokenpip3/my-pkgbuild bash
+
+jobs:
+        include:
+                - stage: lxd
+                  script:
+                          - docker exec my-pkgbuild bash check_version.sh lxd
+                          - docker exec my-pkgbuild bash build.sh lxd
