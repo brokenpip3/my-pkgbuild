@@ -13,8 +13,7 @@ stages:
   # Build and push docker img
   - build
   # Pkgbuild
-  - lxd
-  - lxd-forward-git
+  - pkgbuild
 
 build_image:
   stage: build
@@ -25,19 +24,17 @@ build_image:
     - docker push $CI_REGISTRY/$DOCKERIMG
 
 lxd:
-  stage: lxd
+  stage: pkgbuild
   image: $CI_REGISTRY/$DOCKERIMG
   allow_failure: true
   script:
-    - ls -lrt
     - ./check_version.sh lxd
     - ./build.sh lxd
   
 lxd-forward-git:  
-  stage: lxd-forward-git
+  stage: pkgbuild
   image: brokenpip3/my-pkgbuild
   allow_failure: true
   script:
-    - docker run -d -t --name my-pkgbuild brokenpip3/my-pkgbuild bash
-    - docker exec my-pkgbuild bash build.sh lxd-forward-git True
+    - ./build.sh lxd-forward-git True
 ...
