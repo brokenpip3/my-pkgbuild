@@ -29,9 +29,9 @@ lxd:
   image: $CI_REGISTRY/$DOCKERIMG
   allow_failure: true
   script:
-    - docker run -d -t --name my-pkgbuild $DOCKERIMG bash
-    - docker exec my-pkgbuild bash check_version.sh lxd
-    - docker exec my-pkgbuild bash build.sh lxd
+    - ls -lrt
+    - ./check_version.sh lxd
+    - ./build.sh lxd
   
 lxd-forward-git:  
   stage: lxd-forward-git
