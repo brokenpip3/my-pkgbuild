@@ -26,7 +26,7 @@ build_image:
 
 lxd:
   stage: lxd
-  image: $DOCKERIMG
+  image: $CI_REGISTRY/$DOCKERIMG
   allow_failure: true
   script:
     - docker run -d -t --name my-pkgbuild $DOCKERIMG bash
