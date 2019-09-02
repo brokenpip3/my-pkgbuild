@@ -7,9 +7,11 @@ before_install:
 jobs:
   include:
     - stage: lxd
+      env: ALLOW_FAILURE=true
       script:
         - docker exec my-pkgbuild bash check_version.sh lxd
         - docker exec my-pkgbuild bash build.sh lxd
     - stage: lxd-forward-git
+      env: ALLOW_FAILURE=true
       script:
         - docker exec my-pkgbuild bash build.sh lxd-forward-git True
