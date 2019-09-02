@@ -1,14 +1,18 @@
+---
 image: docker:latest
 
 variables:
   DOCKER_DRIVER: overlay2
   GIT_SUBMODULE_STRATEGY: recursive
+  DOCKERIMG: brokenpip3/my-pkgbuild
 
 services:
   - docker:dind
 
 stages:
+  # Build and push docker img
   - build
+  # Pkgbuild
   - lxd
   - lxd-forward-git
 
@@ -16,19 +20,24 @@ build_image:
   stage: build
   script:
     - docker info
-    - docker build -t brokenpip3/my-pkgbuild .
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - docker build -t $DOCKERIMG .
+    - docker push $DOCKERIMG $CI_REGISTRY
 
 lxd:
   stage: lxd
+  img: $DOCKERIMG
   allow_failure: true
   script:
-    - docker run -d -t --name my-pkgbuild brokenpip3/my-pkgbuild bash
+    - docker run -d -t --name my-pkgbuild $DOCKERIMG bash
     - docker exec my-pkgbuild bash check_version.sh lxd
     - docker exec my-pkgbuild bash build.sh lxd
   
 lxd-forward-git:  
   stage: lxd-forward-git
+  img: brokenpip3/my-pkgbuild
   allow_failure: true
   script:
     - docker run -d -t --name my-pkgbuild brokenpip3/my-pkgbuild bash
     - docker exec my-pkgbuild bash build.sh lxd-forward-git True
+...
