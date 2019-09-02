@@ -1,0 +1,34 @@
+image: docker:latest
+
+variables:
+  DOCKER_DRIVER: overlay2
+  GIT_SUBMODULE_STRATEGY: recursive
+
+services:
+  - docker:dind
+
+stages:
+  - build
+  - lxd
+  - lxd-forward-git
+
+build_image:
+  stage: build
+  script:
+    - docker info
+    - docker build -t brokenpip3/my-pkgbuild .
+
+lxd:
+  stage: lxd
+  allow_failure: true
+  script:
+    - docker run -d -t --name my-pkgbuild brokenpip3/my-pkgbuild bash
+    - docker exec my-pkgbuild bash check_version.sh lxd
+    - docker exec my-pkgbuild bash build.sh lxd
+  
+lxd-forward-git:  
+  stage: lxd-forward-git
+  allow_failure: true
+  script:
+    - docker run -d -t --name my-pkgbuild brokenpip3/my-pkgbuild bash
+    - docker exec my-pkgbuild bash build.sh lxd-forward-git True
