@@ -4,6 +4,10 @@ before_install:
 - docker build -t brokenpip3/my-pkgbuild .
 - docker run -d -t --name my-pkgbuild brokenpip3/my-pkgbuild bash
 
+stages:
+  - lxd
+  - lxd-forward-git
+
 jobs:
   include:
     - stage: lxd
