@@ -2,7 +2,7 @@
 
 This repo contain ci for packages I maintain in arch linux user repo (<https://aur.archlinux.org/packages/>)
 
-* `check_update.sh`: check if there is a new release and change the `pkgver` as
+* `check_version.sh`: check if there is a new release and change the `pkgver` as
   well
 * `build.sh`: test build and send 
 

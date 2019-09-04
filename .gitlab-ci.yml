@@ -39,6 +39,7 @@ lxd-forward-git:
   image: $CI_REGISTRY/$DOCKERIMG
   allow_failure: true
   script:
+    - sudo pacman -S git --noconfirm
     - ./build.sh lxd-forward-git True
     # Test
     - lxd-forward --help

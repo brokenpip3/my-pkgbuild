@@ -52,4 +52,4 @@ else
   exit 1
 fi
 
-#send_tg_message ${RESULT}
+send_tg_message ${RESULT}
