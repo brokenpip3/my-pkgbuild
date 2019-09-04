@@ -13,7 +13,8 @@ stages:
   # Build and push docker img
   - build
   # Pkgbuild
-  - pkgbuild
+  - lxd-stuff
+  - others
 
 build_image:
   stage: build
@@ -24,17 +25,49 @@ build_image:
     - docker push $CI_REGISTRY/$DOCKERIMG
 
 lxd:
-  stage: pkgbuild
+  stage: lxd-stuff
   image: $CI_REGISTRY/$DOCKERIMG
   allow_failure: true
   script:
     - ./check_version.sh lxd
     - ./build.sh lxd
+    # Test
+    - lxc version 
   
 lxd-forward-git:  
-  stage: pkgbuild
+  stage: lxd-stuff
   image: $CI_REGISTRY/$DOCKERIMG
   allow_failure: true
   script:
     - ./build.sh lxd-forward-git True
+    # Test
+    - lxd-forward --help
+
+python-pylxd:  
+  stage: lxd-stuff
+  image: $CI_REGISTRY/$DOCKERIMG
+  allow_failure: true
+  script:
+    # Dep
+    - ./check_version.sh python-requests-unixsocket
+    - ./build.sh python-requests-unixsocket 
+    - ./check_version.sh python-ws4py
+    - ./build.sh python-ws4py 
+    # pkg
+    - ./build.sh python-pylxd
+
+apacheconfig:  
+  stage: others
+  image: $CI_REGISTRY/$DOCKERIMG
+  allow_failure: true
+  script:
+    - ./check_version.sh apache-config
+    - ./build.sh apache-config
+
+lsix-git:
+  stage: others
+  image: $CI_REGISTRY/$DOCKERIMG
+  allow_failure: true
+  script:
+    - ./build.sh lsix-git
 ...

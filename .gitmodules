@@ -4,3 +4,18 @@
 [submodule "pkgbuild/lxd-forward-git"]
 	path = pkgbuild/lxd-forward-git
 	url = https://aur.archlinux.org/lxd-forward-git.git
+[submodule "pkgbuild/lsix-git"]
+	path = pkgbuild/lsix-git
+	url = https://aur.archlinux.org/lsix-git.git
+[submodule "pkgbuild/apacheconfig"]
+	path = pkgbuild/apacheconfig
+	url = https://aur.archlinux.org/apacheconfig.git
+[submodule "pkgbuild/python-pylxd"]
+	path = pkgbuild/python-pylxd
+	url = https://aur.archlinux.org/python-pylxd.git
+[submodule "pkgbuild/python-requests-unixsocket"]
+	path = pkgbuild/python-requests-unixsocket
+	url = https://aur.archlinux.org/python-requests-unixsocket.git
+[submodule "pkgbuild/python-ws4py"]
+	path = pkgbuild/python-ws4py
+	url = https://aur.archlinux.org/python-ws4py.git
