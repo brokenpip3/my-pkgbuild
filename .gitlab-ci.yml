@@ -14,7 +14,8 @@ stages:
   - build
   # Pkgbuild
   - lxd-stuff
-  - others
+  - apacheconfig
+  - lsix-git
 
 build_image:
   stage: build
@@ -58,7 +59,7 @@ python-pylxd:
     - ./build.sh python-pylxd
 
 apacheconfig:  
-  stage: others
+  stage: apacheconfig
   image: $CI_REGISTRY/$DOCKERIMG
   allow_failure: true
   script:
@@ -66,7 +67,7 @@ apacheconfig:
     - ./build.sh apache-config
 
 lsix-git:
-  stage: others
+  stage: lsix-git
   image: $CI_REGISTRY/$DOCKERIMG
   allow_failure: true
   script:
