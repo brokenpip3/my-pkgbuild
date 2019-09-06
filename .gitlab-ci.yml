@@ -16,6 +16,7 @@ stages:
   - lxd-stuff
   - apacheconfig
   - lsix-git
+  - k2tf
 
 build_image:
   stage: build
@@ -81,4 +82,13 @@ lsix-git:
   allow_failure: true
   script:
     - ./build.sh lsix-git
+
+k2tf:
+  stage: k2tf
+  image: $CI_REGISTRY/$DOCKERIMG
+  allow_failure: true
+  script:
+    - ./build.sh k2tf
+    # Test
+    - k2tf --help
 ...
