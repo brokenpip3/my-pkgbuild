@@ -63,8 +63,8 @@ apacheconfig:
   image: $CI_REGISTRY/$DOCKERIMG
   allow_failure: true
   script:
-    - ./check_version.sh apache-config
-    - ./build.sh apache-config
+    - ./check_version.sh apacheconfig
+    - ./build.sh apacheconfig
 
 lsix-git:
   stage: lsix-git
