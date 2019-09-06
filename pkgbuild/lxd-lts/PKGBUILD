@@ -44,13 +44,9 @@ md5sums=('SKIP'
          'c86b8c441ab014340186acc7799096f2'
          '427926fddb1537f7a65d0a7274106df5')
 
-prepare() {
-  mkdir -p "${srcdir}/go/src/github.com/lxc"
-  ln -rTsf "${srcdir}/$_pkgname-$pkgver" "${srcdir}/go/src/${_lxd}"
-}
 
-build() { 
-  export GOPATH="${srcdir}/go"
+build() {
+  export GOPATH="${srcdir}/${pkgname}-${pkgver}/_dist"
   cd "${GOPATH}/src/${_lxd}"
   make deps
   export CGO_CFLAGS="-I${GOPATH}/deps/sqlite/ -I${GOPATH}/deps/libco/ -I${GOPATH}/deps/raft/include/ -I${GOPATH}/deps/dqlite/include/"
@@ -60,8 +56,9 @@ build() {
 }
 
 package() {
-  go_bin_dir="${srcdir}/go/bin"
-  go_deps_dir="${srcdir}/go/deps"
+  go_path="${srcdir}/${pkgname}-${pkgver}/_dist"
+  go_bin_dir="${go_path}/bin"
+  go_deps_dir="${go_path}/deps"
   install=lxd.install
   mkdir -p "${pkgdir}/usr/bin"
   mkdir -p "${pkgdir}/usr/lib/lxd"
@@ -71,14 +68,14 @@ package() {
   patchelf --set-rpath "/usr/lib/lxd" "${pkgdir}/usr/bin/lxd"
   cp --no-dereference --preserve=timestamps \
     "${go_deps_dir}/sqlite/.libs/"libsqlite3.so* \
-    "${go_deps_dir}/libco/libco.so.0.1.0" \
+    "${go_deps_dir}/libco/"libco.so* \
     "${go_deps_dir}/raft/.libs/"libraft.so* \
     "${go_deps_dir}/dqlite/.libs/"libdqlite.so* \
     "${pkgdir}/usr/lib/lxd"
   patchelf --set-rpath "/usr/lib/lxd" "${pkgdir}/usr/lib/lxd/libdqlite.so"
 
   # Package license
-  install -Dm644 "${srcdir}/go/src/${_lxd}/COPYING"  "${pkgdir}/usr/share/licenses/${_pkgname}/LICENCE"
+  install -Dm644 "${go_path}/src/${_lxd}/COPYING"  "${pkgdir}/usr/share/licenses/${_pkgname}/LICENCE"
 
   # systemd files
   install -D -m644 "${srcdir}/lxd.service" \
@@ -87,11 +84,11 @@ package() {
     "${pkgdir}/usr/lib/systemd/system/lxd.socket"
 
   # documentation
-  install -D -m644 "${srcdir}/go/src/${_lxd}/doc/"* \
+  install -D -m644 "${go_path}/src/${_lxd}/doc/"* \
     "${pkgdir}/usr/share/doc/lxd/"
 
   # Bash completions
-  install -p -m644 "${srcdir}/go/src/${_lxd}/scripts/bash/lxd-client" \
+  install -p -m644 "${go_path}/src/${_lxd}/scripts/bash/lxd-client" \
     "${pkgdir}/usr/share/bash-completion/completions/lxd"
 
   # Example configuration files
