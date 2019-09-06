@@ -21,8 +21,13 @@ optdepends=(
     'thin-provisioning-tools: for thin provisioning support'
     'btrfs-progs: for btrfs storage driver support'
     'ceph: for ceph storage driver support'
+    'lxcfs: for lxcfs support'
 )
+
 options=('!strip' '!emptydirs')
+
+_lxd=github.com/lxc/lxd
+
 source=(
     "https://${_lxd}/releases/download/${pkgname}-${pkgver}/${pkgname}-${pkgver}.tar.gz"
     "lxd.service"
@@ -33,7 +38,6 @@ source=(
     "dbus-dnsmasq-lxd.conf"
     "networkmanager-dnsmasq-lxd.conf"
 )
-_lxd=github.com/lxc/lxd
 
 md5sums=('SKIP'
          'a95280cf05920bd561cae451acb5b27d'
