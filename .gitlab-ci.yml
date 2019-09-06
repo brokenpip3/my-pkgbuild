@@ -35,6 +35,15 @@ lxd:
     # Test
     - lxc version 
   
+lxd-lts:
+  stage: lxd-stuff
+  image: $CI_REGISTRY/$DOCKERIMG
+  allow_failure: true
+  script:
+    - ./build.sh lxd-lts
+    # Test
+    - lxc version 
+
 lxd-forward-git:  
   stage: lxd-stuff
   image: $CI_REGISTRY/$DOCKERIMG
