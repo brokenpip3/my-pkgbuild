@@ -24,7 +24,7 @@ optdepends=(
 )
 options=('!strip' '!emptydirs')
 source=(
-    "https://github.com/lxc/lxd/releases/download/lxd-3.16/lxd-3.0.4.tar.gz"
+    "https://${_lxd}/releases/download/${pkgname}-${pkgver}/${pkgname}-${pkgver}.tar.gz"
     "lxd.service"
     "lxd.socket"
     "dnsmasq-lxd.conf"
