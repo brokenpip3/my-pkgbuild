@@ -29,7 +29,7 @@ options=('!strip' '!emptydirs')
 _lxd=github.com/lxc/lxd
 
 source=(
-    "https://${_lxd}/releases/download/${pkgname}-${pkgver}/${pkgname}-${pkgver}.tar.gz"
+    "https://${_lxd}/releases/download/${pkgname}-${pkgver}/${_pkgname}-${pkgver}.tar.gz"
     "lxd.service"
     "lxd.socket"
     "dnsmasq-lxd.conf"

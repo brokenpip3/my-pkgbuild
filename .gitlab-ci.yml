@@ -66,6 +66,7 @@ python-pylxd:
     - ./check_version.sh python-ws4py
     - ./build.sh python-ws4py 
     # pkg
+    - ./check_version.sh python-pylxd
     - ./build.sh python-pylxd
 
 apacheconfig:  
@@ -89,6 +90,4 @@ k2tf:
   allow_failure: true
   script:
     - ./build.sh k2tf
-    # Test
-    - k2tf --help
 ...
