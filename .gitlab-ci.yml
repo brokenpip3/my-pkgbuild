@@ -90,4 +90,11 @@ k2tf:
   allow_failure: true
   script:
     - ./build.sh k2tf
+
+notes-git:
+  stage: k2tf
+  image: $CI_REGISTRY/$DOCKERIMG
+  allow_failure: true
+  script:
+    - ./build.sh notes-git
 ...
