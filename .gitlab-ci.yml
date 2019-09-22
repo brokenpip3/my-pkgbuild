@@ -97,4 +97,5 @@ notes-git:
   allow_failure: true
   script:
     - ./build.sh notes-git
+    - notes --help
 ...

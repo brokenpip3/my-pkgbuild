@@ -50,7 +50,7 @@ md5sums=('SKIP'
 
 
 build() {
-  export GOPATH="${srcdir}/${pkgname}-${pkgver}/_dist"
+  export GOPATH="${srcdir}/${_pkgname}-${pkgver}/dist"
   cd "${GOPATH}/src/${_lxd}"
   make deps
   export CGO_CFLAGS="-I${GOPATH}/deps/sqlite/ -I${GOPATH}/deps/libco/ -I${GOPATH}/deps/raft/include/ -I${GOPATH}/deps/dqlite/include/"
@@ -60,7 +60,7 @@ build() {
 }
 
 package() {
-  go_path="${srcdir}/${pkgname}-${pkgver}/_dist"
+  go_path="${srcdir}/${_pkgname}-${pkgver}/dist"
   go_bin_dir="${go_path}/bin"
   go_deps_dir="${go_path}/deps"
   install=lxd.install
