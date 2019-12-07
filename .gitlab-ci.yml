@@ -16,7 +16,10 @@ stages:
   - lxd-stuff
   - apacheconfig
   - lsix-git
-  - k2tf
+  - k2tf-bin
+  - notes-git
+  - podman-compose-git
+  - k8sh-git
 
 build_image:
   stage: build
@@ -85,17 +88,31 @@ lsix-git:
     - ./build.sh lsix-git
 
 k2tf:
-  stage: k2tf
+  stage: k2tf-bin
   image: $CI_REGISTRY/$DOCKERIMG
   allow_failure: true
   script:
-    - ./build.sh k2tf
+    - ./build.sh k2tf-bin
 
 notes-git:
-  stage: k2tf
+  stage: notes-git
   image: $CI_REGISTRY/$DOCKERIMG
   allow_failure: true
   script:
     - ./build.sh notes-git
     - notes --help
+
+podman-compose-git:
+  stage: podman-compose-git
+  image: $CI_REGISTRY/$DOCKERIMG
+  allow_failure: true
+  script:
+    - ./build.sh podman-compose-git
+
+k8sh-git:
+  stage: k8sh-git
+  image: $CI_REGISTRY/$DOCKERIMG
+  allow_failure: true
+  script:
+    - ./build.sh k8sh-git
 ...
