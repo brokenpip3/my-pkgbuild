@@ -23,11 +23,12 @@ stages:
 
 build_image:
   stage: build
+  image:
+    name: gcr.io/kaniko-project/executor:debug
+    entrypoint: [""]
   script:
-    - docker info
-    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
-    - docker build -t $CI_REGISTRY/$DOCKERIMG .
-    - docker push $CI_REGISTRY/$DOCKERIMG
+    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
+    - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $CI_REGISTRY/$DOCKERIMG
 
 lxd:
   stage: lxd-stuff
@@ -37,8 +38,8 @@ lxd:
     - ./check_version.sh lxd
     - ./build.sh lxd
     # Test
-    - lxc version 
-  
+    - lxc version
+
 lxd-lts:
   stage: lxd-stuff
   image: $CI_REGISTRY/$DOCKERIMG
@@ -46,9 +47,9 @@ lxd-lts:
   script:
     - ./build.sh lxd-lts
     # Test
-    - lxc version 
+    - lxc version
 
-lxd-forward-git:  
+lxd-forward-git:
   stage: lxd-stuff
   image: $CI_REGISTRY/$DOCKERIMG
   allow_failure: true
@@ -58,21 +59,21 @@ lxd-forward-git:
     # Test
     - lxd-forward --help
 
-python-pylxd:  
+python-pylxd:
   stage: lxd-stuff
   image: $CI_REGISTRY/$DOCKERIMG
   allow_failure: true
   script:
     # Dep
     - ./check_version.sh python-requests-unixsocket
-    - ./build.sh python-requests-unixsocket 
+    - ./build.sh python-requests-unixsocket
     - ./check_version.sh python-ws4py
-    - ./build.sh python-ws4py 
+    - ./build.sh python-ws4py
     # pkg
     - ./check_version.sh python-pylxd
     - ./build.sh python-pylxd
 
-apacheconfig:  
+apacheconfig:
   stage: apacheconfig
   image: $CI_REGISTRY/$DOCKERIMG
   allow_failure: true
