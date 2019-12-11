@@ -2,12 +2,10 @@
 image: docker:latest
 
 variables:
-  DOCKER_DRIVER: overlay2
   GIT_SUBMODULE_STRATEGY: recursive
-  DOCKERIMG: brokenpip3/my-pkgbuild
-
-services:
-  - docker:dind
+  CI_REGISTRY_IMAGE: docker.io/brokenpip3/my-pkgbuild
+  CI_REGISTRY_USER: brokenpip3
+  CI_REGISTRY: docker.io
 
 stages:
   # Build and push docker img
@@ -28,7 +26,7 @@ build_image:
     entrypoint: [""]
   script:
     - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
-    - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $CI_REGISTRY/$DOCKERIMG
+    - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $CI_REGISTRY_IMAGE
 
 lxd:
   stage: lxd-stuff
