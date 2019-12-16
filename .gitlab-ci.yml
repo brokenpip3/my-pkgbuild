@@ -23,13 +23,11 @@ stages:
 build_image:
   stage: build
   image:
-    name: gcr.io/kaniko-project/executor@sha256:1a163e192bce5412931759aa15ce3cd9719a035fe252e2b6e8298bddee456afa
+    name: gcr.io/kaniko-project/executor:debug-v0.14.0
     entrypoint: [""]
   script:
-    - mkdir -p /root/.docker
     - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
-    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /root/.docker/config.json
-    - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $CI_REGISTRY/$DOCKERIMG:latest
+    - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $CI_REGISTRY_IMAGE:$CI_COMMIT_TAG
 
 lxd:
   stage: lxd-stuff
