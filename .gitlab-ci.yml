@@ -23,6 +23,7 @@ stages:
   - notes-git
   - podman-compose-git
   - k8sh-git
+  - openshift-cli-bin
 
 build_image:
   stage: build
@@ -31,16 +32,6 @@ build_image:
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
     - docker build -t $CI_REGISTRY/$DOCKERIMG .
     - docker push $CI_REGISTRY/$DOCKERIMG
-
-lxd:
-  stage: lxd-stuff
-  image: $CI_REGISTRY/$DOCKERIMG
-  allow_failure: true
-  script:
-    - ./check_version.sh lxd
-    - ./build.sh lxd
-    # Test
-    - lxc version
 
 lxd-lts:
   stage: lxd-stuff
@@ -118,4 +109,12 @@ k8sh-git:
   allow_failure: true
   script:
     - ./build.sh k8sh-git
+
+openshift-cli-bin:
+  stage: openshift-cli-bin
+  image: $CI_REGISTRY/$DOCKERIMG
+  allow_failure: true
+  script:
+    - ./build.sh openshift-cli-bin
+    - oc version
 ...
