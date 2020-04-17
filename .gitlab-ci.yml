@@ -7,6 +7,10 @@ variables:
   #CI_REGISTRY_USER: brokenpip3
   #CI_REGISTRY: docker.io
   DOCKERIMG: brokenpip3/my-pkgbuild
+  DOCKER_DRIVER: overlay2
+
+services:   
+  - docker:dind
 
 stages:
   # Build and push docker img
@@ -22,12 +26,11 @@ stages:
 
 build_image:
   stage: build
-  image:
-    name: gcr.io/kaniko-project/executor:v0.13.0
-    entrypoint: [""]
   script:
-    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
-    - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $CI_REGISTRY/$DOCKERIMG -v debug
+    - docker info
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - docker build -t $CI_REGISTRY/$DOCKERIMG .
+    - docker push $CI_REGISTRY/$DOCKERIMG
 
 lxd:
   stage: lxd-stuff
