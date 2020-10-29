@@ -58,7 +58,7 @@ spec:
       steps {
 		container('aurbuild')
     {
-      sh "cd ${params.PACKAGENAME} && makepkg -s -o --noconfirm"
+      sh "cd pkgbuild/${params.PACKAGENAME} && makepkg -s -o --noconfirm"
     }
     }
     }
@@ -66,7 +66,7 @@ spec:
       steps {
 		container('aurbuild')
     {
-      sh "cd ${params.PACKAGENAME} && makepkg -scf --noconfirm"
+      sh "cd pkgbuild/${params.PACKAGENAME} && makepkg -scf --noconfirm"
     }
     }
     }
