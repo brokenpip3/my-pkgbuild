@@ -78,5 +78,13 @@ spec:
           }
     }
     }
+    stage('check new version') {
+      steps {
+		      container('aurbuild')
+          {
+          sh "./check_version.sh ${params.PACKAGENAME}"
+          }
+    }
+    }
 }
 }

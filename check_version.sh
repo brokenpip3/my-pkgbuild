@@ -23,7 +23,7 @@ lastver=$(get_latest_release "$repo")
 lastver_clean=$(grep -P -o '(\d(\.(?=\d))?){2,}' <<<"${lastver}")
 
 echo "####"
-echo "Check new version for pkgbuild: $pkgname"
+echo "Checking new version for pkgbuild: $pkgname"
 echo "####"
 
 if [[ ${lastver_clean} != "" ]] && [[ ${lastver_clean} != ${pkgver} ]]; then
