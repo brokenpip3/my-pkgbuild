@@ -9,11 +9,7 @@ get_latest_release() {
 tmpdir=$(pwd)
 
 package="$1"
-<<<<<<< HEAD
 source $tmpdir/pkgbuild/$package/PKGBUILD 
-=======
-source pkgbuild/$package/PKGBUILD
->>>>>>> dd5b476 (fix)
 
 re="^(https|git)(:\/\/|@)([^\/:]+)[\/:]([^\/:]+)\/(.+)$"
 if [[ $url =~ $re ]]; then
