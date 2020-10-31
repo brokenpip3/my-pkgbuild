@@ -86,5 +86,13 @@ spec:
           }
     }
     }
+    stage('build-newver') {
+      steps {
+		container('aurbuild')
+    {
+      sh "cd pkgbuild/${params.PACKAGENAME} && makepkg -scf --noconfirm"
+    }
+    }
+    }
 }
 }
