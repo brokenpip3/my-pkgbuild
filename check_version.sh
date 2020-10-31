@@ -3,13 +3,17 @@
 #set -x
 
 get_latest_release() {
-  curl --silent "https://api.github.com/repos/$1/releases" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/'|head -n 1   
+  curl --silent "https://api.github.com/repos/$1/releases" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/'|head -n 1
 }
 
 tmpdir=$(pwd)
 
 package="$1"
+<<<<<<< HEAD
 source $tmpdir/pkgbuild/$package/PKGBUILD 
+=======
+source pkgbuild/$package/PKGBUILD
+>>>>>>> dd5b476 (fix)
 
 re="^(https|git)(:\/\/|@)([^\/:]+)[\/:]([^\/:]+)\/(.+)$"
 if [[ $url =~ $re ]]; then
