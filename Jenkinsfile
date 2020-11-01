@@ -88,9 +88,15 @@ spec:
     }
     stage('build-newver') {
       steps {
-		container('aurbuild')
-    {
-      sh "cd pkgbuild/${params.PACKAGENAME} && makepkg -scf --noconfirm"
+		      container('aurbuild')
+          {
+            script {
+             if (fileExists('newversion')) {
+             sh "cd pkgbuild/${params.PACKAGENAME} && makepkg -scf --noconfirm"
+           } else {
+             echo 'No new version'
+        }
+    }
     }
     }
     }
