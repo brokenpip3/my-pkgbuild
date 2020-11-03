@@ -2,7 +2,7 @@
 
 pkgname=openshift-cli-bin
 pkgdesc="Openshift client from upstream, stable version"
-pkgver=4.3.12
+pkgver=4.6.1
 pkgrel=1
 arch=('x86_64')
 url="https://mirror.openshift.com/pub/"
@@ -10,8 +10,8 @@ conflicts=('origin-client' 'origin-client-bin')
 provides=('oc')
 depends=('kubectl')
 license=('MIT')
-source=("https://mirror.openshift.com/pub/openshift-v4/clients/ocp/stable-4.3/openshift-client-linux-$pkgver.tar.gz")
-sha256sums=('1118dfa0fc79c0e2f0944895425c1c9435e0de6cb0ed1d4ee7c19a63d7ee67a0')
+source=("https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshift-client-linux-$pkgver.tar.gz")
+sha256sums=('6b6fc3aa77092312df45e3d8bf0451fbb95a2b30826ec8c6dc9fff2f69e8ee5a')
 
 package() {
   install -Dm 755 "$srcdir/oc" "$pkgdir/usr/bin/oc"
