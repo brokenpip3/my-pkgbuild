@@ -1,4 +1,4 @@
-pipeline {                                                                                               
+pipeline {
   agent {
     kubernetes {
       yaml """
@@ -7,11 +7,9 @@ metadata:
   name: my-pkgbuild
 spec:
   containers:
-  - name: jnlp
-    workingDir: /tmp/jenkins
   - name: aurbuild
     workingDir: /tmp/jenkins
-    image: brokenpip3/dockerbaseciarch:1.4
+    image: brokenpip3/dockerbaseciarch:1.7
     imagePullPolicy: Always
     command:
     - /usr/bin/cat
@@ -30,11 +28,13 @@ spec:
   - name: registry-brokenpip3
   volumes:
   - name: repo-pvc
-    persistentVolumeClaim: 
+    persistentVolumeClaim:
       claimName: repo-pvc
 """
     }}
-        options { disableConcurrentBuilds() }
+        options { disableConcurrentBuilds()
+                    timeout(time: 10, unit: 'MINUTES')
+                }
 
   parameters {
         string(name: 'PACKAGENAME', description: 'Aur package to build')}
