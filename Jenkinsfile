@@ -46,6 +46,10 @@ spec:
     }
   }
 
+  options { disableConcurrentBuilds()
+                    timeout(time: 10, unit: 'MINUTES')
+                }
+
 stages {
     stage('Check dep') {
       steps {
