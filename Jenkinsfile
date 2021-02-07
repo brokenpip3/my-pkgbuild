@@ -36,12 +36,14 @@ spec:
     volumeMounts:
       - name: repo-pvc
         mountPath: /srv/repo
+  nodeSelector:
+    node-role.kubernetes.io/master: ""
   imagePullSecrets:
   - name: registry-brokenpip3
   volumes:
   - name: repo-pvc
     persistentVolumeClaim: 
-      claimName: repo-pvc
+      claimName: new-repo-pvc
 """
     }
   }
