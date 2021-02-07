@@ -5,11 +5,6 @@ RESULT=""
 package="$1"
 mode="$2"
 
-send_tg_message() { 
-/usr/bin/curl --silent --output /dev/null --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" --data-urlencode "text=$1" \
-		--data-urlencode "parse_mode=markdown" "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" 
-}
-
 create_pkg() {
 if [[ "$mode" = "True" ]]; then
   makepkg -sci --noconfirm  --nodeps --skipchecksums
@@ -51,5 +46,3 @@ else
   printf ${RESULT}
   exit 1
 fi
-
-send_tg_message ${RESULT}
